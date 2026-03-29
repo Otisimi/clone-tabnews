@@ -1,2 +1,2 @@
 # clone-tabnews
-Aulas do curso.dev para aprender como criar um projeto como o tabnews.com.br
+Aulas do <a href="https://curso.dev">curso.dev</a> para aprender como criar um projeto como o <a href="https://tabnews.com.br">tabnews.com.br</a>
