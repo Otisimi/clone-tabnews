@@ -1,0 +1,18 @@
+name: Automated Tests # Nome do workflow
+
+on: pull_request # Ação que dispara o job
+
+jobs: # Pode colocar vários jobs aqui
+  jest: # Este é um dos jobs
+    name: Jest Ubuntu # Nome do Job 'jest'
+    runs-on: ubuntu-latest # Sistema que irá rodar o job
+    steps: # Passos do job
+      - uses: actions/checkout@v4 # Uses Define actions que o job irá realizar
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/hydrogen"
+
+      - run: npm ci # Run Define comandos que o job irá rodar
+
+      - run: npm test
