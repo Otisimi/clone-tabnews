@@ -18,7 +18,7 @@ describe("DELETE /api/v1/migrations", () => {
         name: "MethodNotAllowedError",
         message: "Método não permitido para este endpoint",
         action:
-          "Verificque se o método HTTP enviado é valido para este endpoint",
+          "Verifique se o método HTTP enviado é valido para este endpoint",
         status_code: 405,
       });
     });
