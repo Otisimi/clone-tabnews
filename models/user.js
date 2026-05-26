@@ -1,5 +1,5 @@
 import database from "infra/database";
-import { ValidationError } from "infra/errors";
+import { NotFoundError, ValidationError } from "infra/errors";
 
 async function create(userValues) {
   await validateUniqueEmail(userValues.email);
@@ -12,9 +12,10 @@ async function create(userValues) {
   async function validateUniqueEmail(userEmail) {
     const results = await database.query({
       text: `
-          SELECT 1
+          SELECT email
             FROM users
-           WHERE LOWER(email) = LOWER($1); `,
+           WHERE LOWER(email) = LOWER($1)
+           LIMIT 1; `,
       values: [userEmail],
     });
 
@@ -32,7 +33,8 @@ async function create(userValues) {
       text: `
           SELECT username
             FROM users
-           WHERE LOWER(username) = LOWER($1); `,
+           WHERE LOWER(username) = LOWER($1)
+           LIMIT 1; `,
       values: [userUsername],
     });
 
@@ -60,8 +62,35 @@ async function create(userValues) {
   }
 }
 
+async function findOneByUsername(username) {
+  const foundUser = await runSelectQuery(username);
+
+  return foundUser;
+
+  async function runSelectQuery(username) {
+    const results = await database.query({
+      text: `
+          SELECT *
+            FROM users
+           WHERE LOWER(username) = LOWER($1)
+           LIMIT 1; `,
+      values: [username],
+    });
+
+    if (results.rowCount === 0) {
+      throw new NotFoundError({
+        message: "Este usuário não existe.",
+        action: "Verifique se o username está digitado corretamente",
+      });
+    }
+
+    return results.rows[0];
+  }
+}
+
 const user = {
   create,
+  findOneByUsername,
 };
 
 export default user;
