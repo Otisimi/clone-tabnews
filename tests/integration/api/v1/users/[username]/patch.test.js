@@ -122,6 +122,7 @@ describe("GET /api/v1/users/[username]", () => {
         username: "UniqueUser2",
         email: createdUser.email,
         password: responsePatchBody.password,
+        features: [],
         created_at: responsePatchBody.created_at,
         updated_at: responsePatchBody.updated_at,
       });
@@ -161,6 +162,7 @@ describe("GET /api/v1/users/[username]", () => {
         username: createdUser.username,
         email: "uniqueEmail2@teste.com",
         password: responsePatchBody.password,
+        features: [],
         created_at: responsePatchBody.created_at,
         updated_at: responsePatchBody.updated_at,
       });
@@ -200,6 +202,7 @@ describe("GET /api/v1/users/[username]", () => {
         username: createdUser.username,
         email: createdUser.email,
         password: responsePatchBody.password,
+        features: [],
         created_at: responsePatchBody.created_at,
         updated_at: responsePatchBody.updated_at,
       });
