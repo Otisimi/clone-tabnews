@@ -1,7 +1,18 @@
-function can(user, feature) {
+function can(user, feature, resource) {
   let authorized = false;
   if (user.features.includes(feature)) {
     authorized = true;
+  }
+
+  if (feature === "update:user" && resource) {
+    authorized = false;
+
+    if (
+      user.id === resource.id ||
+      user.features.includes("update:user:others")
+    ) {
+      authorized = true;
+    }
   }
 
   return authorized;
