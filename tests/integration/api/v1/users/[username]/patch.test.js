@@ -214,8 +214,6 @@ describe("GET /api/v1/users/[username]", () => {
       expect(responsePatchBody).toEqual({
         id: responsePatchBody.id,
         username: "UniqueUser2",
-        email: createdUser.email,
-        password: responsePatchBody.password,
         features: ["create:session", "read:session", "update:user"],
         created_at: responsePatchBody.created_at,
         updated_at: responsePatchBody.updated_at,
@@ -258,8 +256,6 @@ describe("GET /api/v1/users/[username]", () => {
       expect(responsePatchBody).toEqual({
         id: responsePatchBody.id,
         username: createdUser.username,
-        email: "uniqueEmail2@teste.com",
-        password: responsePatchBody.password,
         features: ["create:session", "read:session", "update:user"],
         created_at: responsePatchBody.created_at,
         updated_at: responsePatchBody.updated_at,
@@ -302,8 +298,6 @@ describe("GET /api/v1/users/[username]", () => {
       expect(responsePatchBody).toEqual({
         id: responsePatchBody.id,
         username: createdUser.username,
-        email: createdUser.email,
-        password: responsePatchBody.password,
         features: ["create:session", "read:session", "update:user"],
         created_at: responsePatchBody.created_at,
         updated_at: responsePatchBody.updated_at,
@@ -370,8 +364,6 @@ describe("GET /api/v1/users/[username]", () => {
       expect(responseBody).toEqual({
         id: responseBody.id,
         username: "AlteredDefaultUseryPrivileged",
-        email: defaultUser.email,
-        password: responseBody.password,
         features: defaultUser.features,
         created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
