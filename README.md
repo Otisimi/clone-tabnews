@@ -1,3 +1,3 @@
 # clone-tabnews
 
-Aulas do <a href="https://curso.dev">curso.dev</a> para aprender como criar um projeto como o <a href="https://tabnews.com.br">tabnews.com.br</a>
+Project from <strong>Curso.dev</strong> to learn about system design and build a website from zero using JavaScript, React, Docker, Jest, Next.JS and many other technologies
