@@ -28,7 +28,7 @@ function DatabaseInfo() {
     const db = data.dependencies.database;
     const dbVersion = db.version;
     const maxConn = db.max_connections;
-    const activeConn = db.active_connections;
+    const activeConn = db.opened_connections;
 
     return (
       <div>

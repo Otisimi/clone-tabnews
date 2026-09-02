@@ -6,6 +6,7 @@ async function create(userValues) {
   await validateUniqueEmail(userValues.email);
   await validateUniqueUsername(userValues.username);
   await hashPasswordInObject(userValues);
+  injectDefaulFeaturesInObject(userValues);
 
   const newUser = await runInsertQuery(userValues);
   return newUser;
@@ -15,14 +16,23 @@ async function create(userValues) {
     const results = await database.query({
       text: `
           INSERT INTO users 
-            (username, email, password) 
+            (username, email, password, features) 
           VALUES 
-            ($1, $2, $3)
+            ($1, $2, $3, $4)
           RETURNING *; `,
-      values: [userValues.username, userValues.email, userValues.password],
+      values: [
+        userValues.username,
+        userValues.email,
+        userValues.password,
+        userValues.features,
+      ],
     });
 
     return results.rows[0];
+  }
+
+  function injectDefaulFeaturesInObject(userValues) {
+    userValues.features = ["read:activation_token"];
   }
 }
 
@@ -187,12 +197,54 @@ async function hashPasswordInObject(userValues) {
   userValues.password = hashedPassword;
 }
 
+async function setFeatures(userId, features) {
+  const updatedUser = await runUpdateQuery(userId, features);
+  return updatedUser;
+
+  async function runUpdateQuery(userId) {
+    const results = await database.query({
+      text: `
+        UPDATE users
+           SET features = $1
+             , updated_at = timezone('utc', now())
+         WHERE id = $2
+        RETURNING *;
+      `,
+      values: [features, userId],
+    });
+
+    return results.rows[0];
+  }
+}
+
+async function addFeatures(userId, features) {
+  const updatedUser = await runUpdateQuery(userId, features);
+  return updatedUser;
+
+  async function runUpdateQuery(userId) {
+    const results = await database.query({
+      text: `
+        UPDATE users
+           SET features = array_cat(features, $1)
+             , updated_at = timezone('utc', now())
+         WHERE id = $2
+        RETURNING *;
+      `,
+      values: [features, userId],
+    });
+
+    return results.rows[0];
+  }
+}
+
 const user = {
   create,
   findOneById,
   findOneByUsername,
   findOneByEmail,
   update,
+  setFeatures,
+  addFeatures,
 };
 
 export default user;

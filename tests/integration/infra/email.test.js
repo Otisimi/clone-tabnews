@@ -28,6 +28,5 @@ describe("infra/email.js", () => {
     expect(lastEmail.recipients[0]).toBe("<otisimi@gmail.com>");
     expect(lastEmail.subject).toBe("Último email enviado");
     expect(lastEmail.text).toBe("Corpo do último email.\r\n");
-    console.log(lastEmail);
   });
 });
