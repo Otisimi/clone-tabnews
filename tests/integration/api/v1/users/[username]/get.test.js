@@ -1,3 +1,4 @@
+import webServer from "infra/webserver";
 import orchestrator from "tests/orchestrator.js";
 import { version as uuidVersion } from "uuid";
 
@@ -17,7 +18,7 @@ describe("GET /api/v1/users/[username]", () => {
       });
 
       const responseTwo = await fetch(
-        "http://localhost:3000/api/v1/users/MesmoCase",
+        `${webServer.origin}/api/v1/users/MesmoCase`,
       );
       expect(responseTwo.status).toBe(200);
 
@@ -44,7 +45,7 @@ describe("GET /api/v1/users/[username]", () => {
       });
 
       const responseTwo = await fetch(
-        "http://localhost:3000/api/v1/users/difcase",
+        `${webServer.origin}/api/v1/users/difcase`,
       );
       expect(responseTwo.status).toBe(200);
 
@@ -65,7 +66,7 @@ describe("GET /api/v1/users/[username]", () => {
 
     test("With nonexistent `username`", async () => {
       const response = await fetch(
-        "http://localhost:3000/api/v1/users/IstoNonExiste",
+        `${webServer.origin}/api/v1/users/IstoNonExiste`,
       );
       expect(response.status).toBe(404);
 
