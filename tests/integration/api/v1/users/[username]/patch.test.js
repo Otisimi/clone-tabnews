@@ -269,6 +269,10 @@ describe("GET /api/v1/users/[username]", () => {
       expect(responsePatchBody.updated_at > responsePatchBody.created_at).toBe(
         true,
       );
+
+      const userInDatabase = await user.findOneByUsername(createdUser.username);
+
+      expect(userInDatabase.email).toBe("uniqueEmail2@teste.com");
     });
 
     test("With new `password`", async () => {
